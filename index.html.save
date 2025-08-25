@@ -1,0 +1,2854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechMart - Best Prices on Electronics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .search-container {
+            flex: 1;
+            position: relative;
+            max-width: 600px;
+        }
+
+        .search-bar {
+            display: flex;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .category-select {
+            padding: 0.75rem;
+            border: none;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            cursor: pointer;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-btn {
+            padding: 0.75rem 1.5rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1001;
+        }
+
+        .suggestion-item {
+            padding: 0.75rem;
+            cursor: pointer;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .suggestion-item:hover {
+            background: #f8f9fa;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            border-top: 1px solid #e9ecef;
+            position: relative;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            overflow-x: auto;
+        }
+
+        .nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background: #f8f9fa;
+            color: #007bff;
+        }
+
+        .mega-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+            display: none;
+            z-index: 999;
+        }
+
+        .mega-menu-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .brand-group h4 {
+            margin-bottom: 1rem;
+            color: #007bff;
+        }
+
+        .brand-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .brand-link {
+            text-decoration: none;
+            color: #666;
+            padding: 0.25rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .brand-link:hover {
+            color: #007bff;
+        }
+
+        /* Alert Strip */
+        .alert-strip {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-cta {
+            background: white;
+            color: #333;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            background: white;
+            padding: 2rem 1rem;
+        }
+
+        .badges-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .badge-icon {
+            width: 48px;
+            height: 48px;
+            background: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        /* Filters */
+        .filters {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .filter-section {
+            margin-bottom: 2rem;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-option input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        .price-range {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .price-inputs {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .price-input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+        }
+
+        /* Products Section */
+        .products-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .products-count {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .sort-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-select {
+            padding: 0.5rem;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            background: white;
+        }
+
+        /* Product Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-badges {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .badge-small {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-hot {
+            background: #dc3545;
+        }
+
+        .badge-deal {
+            background: #28a745;
+        }
+
+        .badge-warranty {
+            background: #007bff;
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .product-specs {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .current-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #007bff;
+        }
+
+        .original-price {
+            font-size: 0.9rem;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .price-drop {
+            background: #28a745;
+            color: white;
+            padding: 0.125rem 0.25rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+        }
+
+        .lowest-price-badge {
+            background: #ffc107;
+            color: #333;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffc107;
+        }
+
+        .rating-count {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: white;
+            color: #007bff;
+            border: 1px solid #007bff;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #007bff;
+            color: white;
+        }
+
+        .product-menu {
+            position: relative;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            color: #666;
+        }
+
+        .menu-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 100;
+            min-width: 150px;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem;
+            cursor: pointer;
+            border-bottom: 1px solid #f8f9fa;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Compare Tray */
+        .compare-tray {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+
+        .compare-tray.active {
+            transform: translateY(0);
+        }
+
+        .compare-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .compare-items {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .compare-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .compare-item img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .remove-compare {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        .compare-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .product-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .thumbnail-list {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .thumbnail.active {
+            border-color: #007bff;
+        }
+
+        .product-info h2 {
+            margin-bottom: 1rem;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .specs-table th,
+        .specs-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .specs-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 3rem 1rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #007bff;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-link {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .newsletter {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .newsletter input {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .newsletter button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: #007bff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #555;
+            color: #ccc;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 3000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Skeleton Loader */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skeleton-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+        }
+
+        .skeleton-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .skeleton-text {
+            height: 1rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .skeleton-text.short {
+            width: 60%;
+        }
+
+        .skeleton-text.medium {
+            width: 80%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-container {
+                order: 2;
+                width: 100%;
+            }
+
+            .header-actions {
+                order: 1;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .filters {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1500;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                border-radius: 0;
+                height: 100vh;
+                overflow-y: auto;
+            }
+
+            .filters.active {
+                transform: translateX(0);
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-content {
+                padding: 0 1rem;
+            }
+
+            .mega-menu {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                padding: 1rem;
+                overflow-y: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .badges-container {
+                grid-template-columns: 1fr;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Alert Strip -->
+    <div class="alert-strip">
+        🔥 Flash Sale: Up to 70% OFF on Electronics | Free Delivery on Orders Above $50
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">TechMart</a>
+            
+            <div class="search-container">
+                <div class="search-bar">
+                    <select class="category-select" id="categorySelect">
+                        <option value="">All Categories</option>
+                        <option value="mobiles">Mobiles</option>
+                        <option value="laptops">Laptops</option>
+                        <option value="tablets">Tablets</option>
+                        <option value="watches">Smart Watches</option>
+                        <option value="earbuds">Wireless Earbuds</option>
+                        <option value="chargers">Chargers & Cables</option>
+                        <option value="powerbanks">Power Banks</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="appliances">Appliances</option>
+                    </select>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search for products, brands and more...">
+                    <button class="search-btn" id="searchBtn">🔍</button>
+                </div>
+                <div class="search-suggestions" id="searchSuggestions"></div>
+            </div>
+
+            <div class="header-actions">
+                <a href="#" class="header-link">📦 Track Order</a>
+                <a href="#" class="header-link">👤 Login/Signup</a>
+                <a href="#" class="header-link cart-icon">
+                    🛒 Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="nav-item" data-category="mobiles">
+                Mobiles
+                <div class="mega-menu">
+                    <div class="mega-menu-content">
+                        <div class="brand-group">
+                            <h4>Popular Brands</h4>
+                            <div class="brand-list">
+                                <a href="#" class="brand-link">Apple</a>
+                                <a href="#" class="brand-link">Samsung</a>
+                                <a href="#" class="brand-link">Xiaomi</a>
+                                <a href="#" class="brand-link">Realme</a>
+                                <a href="#" class="brand-link">Vivo</a>
+                                <a href="#" class="brand-link">Infinix</a>
+                            </div>
+                        </div>
+                        <div class="brand-group">
+                            <h4>Budget Phones</h4>
+                            <div class="brand-list">
+                                <a href="#" class="brand-link">Tecno</a>
+                                <a href="#" class="brand-link">Itel</a>
+                                <a href="#" class="brand-link">Redmi</a>
+                                <a href="#" class="brand-link">Honor</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item" data-category="laptops">
+                Laptops
+                <div class="mega-menu">
+                    <div class="mega-menu-content">
+                        <div class="brand-group">
+                            <h4>Top Brands</h4>
+                            <div class="brand-list">
+                                <a href="#" class="brand-link">HP</a>
+                                <a href="#" class="brand-link">Dell</a>
+                                <a href="#" class="brand-link">Lenovo</a>
+                                <a href="#" class="brand-link">Asus</a>
+                                <a href="#" class="brand-link">Acer</a>
+                                <a href="#" class="brand-link">MSI</a>
+                            </div>
+                        </div>
+                        <div class="brand-group">
+                            <h4>Gaming Laptops</h4>
+                            <div class="brand-list">
+                                <a href="#" class="brand-link">ROG</a>
+                                <a href="#" class="brand-link">Predator</a>
+                                <a href="#" class="brand-link">Legion</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item" data-category="tablets">Tablets</div>
+            <div class="nav-item" data-category="watches">Smart Watches</div>
+            <div class="nav-item" data-category="earbuds">Wireless Earbuds</div>
+            <div class="nav-item" data-category="chargers">Chargers & Cables</div>
+            <div class="nav-item" data-category="powerbanks">Power Banks</div>
+            <div class="nav-item" data-category="accessories">Accessories</div>
+            <div class="nav-item" data-category="appliances">Appliances</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Monthly Mega Sale</h1>
+            <p>Discover amazing deals on the latest electronics with up to 70% off</p>
+            <button class="hero-cta" onclick="scrollToProducts()">Shop Now</button>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="trust-badges">
+        <div class="badges-container">
+            <div class="badge">
+                <div class="badge-icon">✓</div>
+                <div>
+                    <h3>Assured Products</h3>
+                    <p>100% Original & Authentic</p>
+                </div>
+            </div>
+            <div class="badge">
+                <div class="badge-icon">📦</div>
+                <div>
+                    <h3>Open-Parcel Policy</h3>
+                    <p>Check before you pay</p>
+                </div>
+            </div>
+            <div class="badge">
+                <div class="badge-icon">🚚</div>
+                <div>
+                    <h3>Nationwide Delivery</h3>
+                    <p>Fast & reliable shipping</p>
+                </div>
+            </div>
+            <div class="badge">
+                <div class="badge-icon">🔒</div>
+                <div>
+                    <h3>Secure Payments</h3>
+                    <p>Multiple payment options</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Filters Sidebar -->
+        <aside class="filters" id="filters">
+            <div class="filter-section">
+                <h3 class="filter-title">Brands</h3>
+                <div class="filter-options" id="brandFilters">
+                    <!-- Brand filters will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3 class="filter-title">Price Range</h3>
+                <div class="price-range">
+                    <div class="price-inputs">
+                        <input type="number" class="price-input" id="minPrice" placeholder="Min">
+                        <span>-</span>
+                        <input type="number" class="price-input" id="maxPrice" placeholder="Max">
+                    </div>
+                    <button class="btn-primary" onclick="applyPriceFilter()">Apply</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3 class="filter-title">RAM</h3>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <input type="checkbox" value="4GB" onchange="applyFilters()"> 4GB
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="6GB" onchange="applyFilters()"> 6GB
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="8GB" onchange="applyFilters()"> 8GB
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="12GB" onchange="applyFilters()"> 12GB
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="16GB" onchange="applyFilters()"> 16GB
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3 class="filter-title">Storage</h3>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <input type="checkbox" value="64GB" onchange="applyFilters()"> 64GB
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="128GB" onchange="applyFilters()"> 128GB
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="256GB" onchange="applyFilters()"> 256GB
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="512GB" onchange="applyFilters()"> 512GB
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="1TB" onchange="applyFilters()"> 1TB
+                    </label>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <h3 class="filter-title">Availability</h3>
+                <div class="filter-options">
+                    <label class="filter-option">
+                        <input type="checkbox" value="in-stock" onchange="applyFilters()"> In Stock
+                    </label>
+                    <label class="filter-option">
+                        <input type="checkbox" value="pre-order" onchange="applyFilters()"> Pre-Order
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Products Section -->
+        <section class="products-section">
+            <div class="products-header">
+                <div class="products-count" id="productsCount">Loading products...</div>
+                <div class="sort-container">
+                    <label for="sortSelect">Sort by:</label>
+                    <select class="sort-select" id="sortSelect" onchange="sortProducts()">
+                        <option value="relevance">Relevance</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Skeleton loaders -->
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                    <div class="skeleton skeleton-text medium"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                    <div class="skeleton skeleton-text medium"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                    <div class="skeleton skeleton-text medium"></div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton skeleton-image"></div>
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                    <div class="skeleton skeleton-text medium"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Compare Tray -->
+    <div class="compare-tray" id="compareTray">
+        <div class="compare-content">
+            <div class="compare-items" id="compareItems"></div>
+            <button class="compare-btn" onclick="openCompareModal()">Compare</button>
+            <button class="compare-btn" onclick="clearCompare()" style="background: #dc3545; margin-left: 0.5rem;">Clear All</button>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Product Details</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Product details will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Modal -->
+    <div class="modal" id="compareModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Compare Products</h2>
+                <button class="close-btn" onclick="closeCompareModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="compareModalBody">
+                <!-- Compare table will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About TechMart</h3>
+                <p>Your trusted partner for the latest electronics at unbeatable prices. We offer authentic products with nationwide delivery and excellent customer service.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">📘</a>
+                    <a href="#" class="social-icon">🐦</a>
+                    <a href="#" class="social-icon">📷</a>
+                    <a href="#" class="social-icon">💼</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Contact Us</a>
+                    <a href="#" class="footer-link">Track Your Order</a>
+                    <a href="#" class="footer-link">Return Policy</a>
+                    <a href="#" class="footer-link">Warranty Info</a>
+                    <a href="#" class="footer-link">FAQs</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Careers</a>
+                    <a href="#" class="footer-link">Press</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Subscribe to get updates on new products and exclusive deals!</p>
+                <div class="newsletter">
+                    <input type="email" placeholder="Enter your email">
+                    <button>Subscribe</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 TechMart. All rights reserved. | Designed with ❤️ for tech enthusiasts</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Product Data
+        const products = [
+            {
+                id: 1,
+                name: "iPhone 15 Pro Max",
+                category: "mobiles",
+                brand: "Apple",
+                image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=400&fit=crop",
+                price: 1199,
+                originalPrice: 1299,
+                specs: "A17 Pro • 8GB RAM + 256GB • 48MP Triple Camera • 4441mAh",
+                rating: 4.8,
+                reviews: 2847,
+                badges: ["hot", "warranty"],
+                availability: "in-stock",
+                ram: "8GB",
+                storage: "256GB",
+                camera: "48MP",
+                battery: "4441mAh",
+                installments: true
+            },
+            {
+                id: 2,
+                name: "Samsung Galaxy S24 Ultra",
+                category: "mobiles",
+                brand: "Samsung",
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&h=400&fit=crop",
+                price: 1099,
+                originalPrice: 1199,
+                specs: "Snapdragon 8 Gen 3 • 12GB RAM + 512GB • 200MP Quad Camera • 5000mAh",
+                rating: 4.7,
+                reviews: 1923,
+                badges: ["deal", "warranty"],
+                availability: "in-stock",
+                ram: "12GB",
+                storage: "512GB",
+                camera: "200MP",
+                battery: "5000mAh",
+                installments: true
+            },
+            {
+                id: 3,
+                name: "MacBook Pro 16-inch M3",
+                category: "laptops",
+                brand: "Apple",
+                image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=400&fit=crop",
+                price: 2499,
+                originalPrice: 2699,
+                specs: "M3 Pro Chip • 18GB RAM + 512GB SSD • 16.2\" Liquid Retina XDR • macOS",
+                rating: 4.9,
+                reviews: 856,
+                badges: ["warranty"],
+                availability: "in-stock",
+                ram: "18GB",
+                storage: "512GB",
+                cpu: "M3 Pro",
+                display: "16.2\"",
+                installments: true
+            },
+            {
+                id: 4,
+                name: "Dell XPS 13 Plus",
+                category: "laptops",
+                brand: "Dell",
+                image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop",
+                price: 1299,
+                originalPrice: 1499,
+                specs: "Intel i7-13700H • 16GB RAM + 1TB SSD • 13.4\" OLED • Windows 11",
+                rating: 4.6,
+                reviews: 634,
+                badges: ["deal"],
+                availability: "in-stock",
+                ram: "16GB",
+                storage: "1TB",
+                cpu: "Intel i7",
+                display: "13.4\"",
+                installments: true
+            },
+            {
+                id: 5,
+                name: "iPad Pro 12.9-inch M2",
+                category: "tablets",
+                brand: "Apple",
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=400&fit=crop",
+                price: 1099,
+                originalPrice: 1199,
+                specs: "M2 Chip • 8GB RAM + 256GB • 12.9\" Liquid Retina XDR • iPadOS",
+                rating: 4.8,
+                reviews: 1247,
+                badges: ["warranty"],
+                availability: "in-stock",
+                ram: "8GB",
+                storage: "256GB",
+                display: "12.9\"",
+                installments: true
+            },
+            {
+                id: 6,
+                name: "Apple Watch Series 9",
+                category: "watches",
+                brand: "Apple",
+                image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop",
+                price: 399,
+                originalPrice: 449,
+                specs: "S9 SiP • GPS + Cellular • 45mm • Always-On Retina Display",
+                rating: 4.7,
+                reviews: 3421,
+                badges: ["hot"],
+                availability: "in-stock",
+                display: "45mm",
+                connectivity: "GPS + Cellular",
+                installments: true
+            },
+            {
+                id: 7,
+                name: "AirPods Pro 2nd Gen",
+                category: "earbuds",
+                brand: "Apple",
+                image: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=400&fit=crop",
+                price: 249,
+                originalPrice: 279,
+                specs: "H2 Chip • Active Noise Cancellation • Spatial Audio • 30hr Battery",
+                rating: 4.8,
+                reviews: 5632,
+                badges: ["deal", "warranty"],
+                availability: "in-stock",
+                bluetooth: "5.3",
+                battery: "30hr",
+                installments: false
+            },
+            {
+                id: 8,
+                name: "Samsung Galaxy Buds2 Pro",
+                category: "earbuds",
+                brand: "Samsung",
+                image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=400&fit=crop",
+                price: 179,
+                originalPrice: 229,
+                specs: "ANC • 360 Audio • IPX7 • 28hr Battery with Case",
+                rating: 4.5,
+                reviews: 2134,
+                badges: ["deal"],
+                availability: "in-stock",
+                bluetooth: "5.2",
+                battery: "28hr",
+                installments: false
+            },
+            {
+                id: 9,
+                name: "Anker PowerCore 26800",
+                category: "powerbanks",
+                brand: "Anker",
+                image: "https://images.unsplash.com/photo-1609592806787-3d9c1b8e5e8e?w=400&h=400&fit=crop",
+                price: 65,
+                originalPrice: 79,
+                specs: "26800mAh • 3 USB Ports • PowerIQ 2.0 • Fast Charging",
+                rating: 4.6,
+                reviews: 8934,
+                badges: ["warranty"],
+                availability: "in-stock",
+                capacity: "26800mAh",
+                ports: "3 USB",
+                installments: false
+            },
+            {
+                id: 10,
+                name: "Xiaomi Redmi Note 13 Pro",
+                category: "mobiles",
+                brand: "Xiaomi",
+                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop",
+                price: 299,
+                originalPrice: 349,
+                specs: "Snapdragon 7s Gen 2 • 8GB RAM + 256GB • 200MP Triple Camera • 5100mAh",
+                rating: 4.4,
+                reviews: 1567,
+                badges: ["hot", "deal"],
+                availability: "in-stock",
+                ram: "8GB",
+                storage: "256GB",
+                camera: "200MP",
+                battery: "5100mAh",
+                installments: true
+            },
+            {
+                id: 11,
+                name: "HP Pavilion Gaming 15",
+                category: "laptops",
+                brand: "HP",
+                image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400&h=400&fit=crop",
+                price: 899,
+                originalPrice: 999,
+                specs: "AMD Ryzen 7 • 16GB RAM + 512GB SSD • RTX 4060 • 15.6\" FHD 144Hz",
+                rating: 4.3,
+                reviews: 743,
+                badges: ["deal"],
+                availability: "in-stock",
+                ram: "16GB",
+                storage: "512GB",
+                cpu: "AMD Ryzen 7",
+                gpu: "RTX 4060",
+                display: "15.6\"",
+                installments: true
+            },
+            {
+                id: 12,
+                name: "Realme GT 5 Pro",
+                category: "mobiles",
+                brand: "Realme",
+                image: "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=400&h=400&fit=crop",
+                price: 449,
+                originalPrice: 499,
+                specs: "Snapdragon 8 Gen 3 • 12GB RAM + 256GB • 50MP Triple Camera • 5400mAh",
+                rating: 4.5,
+                reviews: 892,
+                badges: ["hot"],
+                availability: "in-stock",
+                ram: "12GB",
+                storage: "256GB",
+                camera: "50MP",
+                battery: "5400mAh",
+                installments: true
+            },
+            {
+                id: 13,
+                name: "Lenovo ThinkPad X1 Carbon",
+                category: "laptops",
+                brand: "Lenovo",
+                image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&h=400&fit=crop",
+                price: 1599,
+                originalPrice: 1799,
+                specs: "Intel i7-13700U • 16GB RAM + 1TB SSD • 14\" WUXGA • Windows 11 Pro",
+                rating: 4.7,
+                reviews: 456,
+                badges: ["warranty"],
+                availability: "in-stock",
+                ram: "16GB",
+                storage: "1TB",
+                cpu: "Intel i7",
+                display: "14\"",
+                installments: true
+            },
+            {
+                id: 14,
+                name: "Samsung Galaxy Tab S9+",
+                category: "tablets",
+                brand: "Samsung",
+                image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=400&fit=crop",
+                price: 799,
+                originalPrice: 899,
+                specs: "Snapdragon 8 Gen 2 • 12GB RAM + 256GB • 12.4\" AMOLED • S Pen Included",
+                rating: 4.6,
+                reviews: 678,
+                badges: ["deal"],
+                availability: "in-stock",
+                ram: "12GB",
+                storage: "256GB",
+                display: "12.4\"",
+                installments: true
+            },
+            {
+                id: 15,
+                name: "Garmin Venu 3",
+                category: "watches",
+                brand: "Garmin",
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
+                price: 449,
+                originalPrice: 499,
+                specs: "GPS • Health Monitoring • 14-day Battery • AMOLED Display",
+                rating: 4.5,
+                reviews: 1234,
+                badges: ["warranty"],
+                availability: "in-stock",
+                display: "AMOLED",
+                battery: "14-day",
+                installments: true
+            },
+            {
+                id: 16,
+                name: "Sony WH-1000XM5",
+                category: "earbuds",
+                brand: "Sony",
+                image: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=400&fit=crop",
+                price: 349,
+                originalPrice: 399,
+                specs: "Industry-leading ANC • 30hr Battery • Hi-Res Audio • Multipoint Connection",
+                rating: 4.8,
+                reviews: 4567,
+                badges: ["hot", "warranty"],
+                availability: "in-stock",
+                bluetooth: "5.2",
+                battery: "30hr",
+                installments: true
+            },
+            {
+                id: 17,
+                name: "Anker 67W USB-C Charger",
+                category: "chargers",
+                brand: "Anker",
+                image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop",
+                price: 45,
+                originalPrice: 59,
+                specs: "67W Power Delivery • GaN Technology • Foldable Design • Universal Compatibility",
+                rating: 4.7,
+                reviews: 3456,
+                badges: ["deal"],
+                availability: "in-stock",
+                power: "67W",
+                ports: "USB-C",
+                installments: false
+            },
+            {
+                id: 18,
+                name: "Vivo V29 Pro",
+                category: "mobiles",
+                brand: "Vivo",
+                image: "https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?w=400&h=400&fit=crop",
+                price: 399,
+                originalPrice: 449,
+                specs: "Dimensity 8200 • 12GB RAM + 256GB • 50MP OIS Camera • 4600mAh",
+                rating: 4.3,
+                reviews: 756,
+                badges: ["deal"],
+                availability: "in-stock",
+                ram: "12GB",
+                storage: "256GB",
+                camera: "50MP",
+                battery: "4600mAh",
+                installments: true
+            },
+            {
+                id: 19,
+                name: "ASUS ROG Strix G15",
+                category: "laptops",
+                brand: "Asus",
+                image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=400&fit=crop",
+                price: 1299,
+                originalPrice: 1499,
+                specs: "AMD Ryzen 9 • 32GB RAM + 1TB SSD • RTX 4070 • 15.6\" QHD 165Hz",
+                rating: 4.6,
+                reviews: 892,
+                badges: ["hot", "warranty"],
+                availability: "in-stock",
+                ram: "32GB",
+                storage: "1TB",
+                cpu: "AMD Ryzen 9",
+                gpu: "RTX 4070",
+                display: "15.6\"",
+                installments: true
+            },
+            {
+                id: 20,
+                name: "Infinix Note 30 Pro",
+                category: "mobiles",
+                brand: "Infinix",
+                image: "https://images.unsplash.com/photo-1567581935884-3349723552ca?w=400&h=400&fit=crop",
+                price: 249,
+                originalPrice: 299,
+                specs: "Dimensity 8050 • 8GB RAM + 256GB • 108MP Triple Camera • 5000mAh",
+                rating: 4.2,
+                reviews: 1345,
+                badges: ["deal"],
+                availability: "in-stock",
+                ram: "8GB",
+                storage: "256GB",
+                camera: "108MP",
+                battery: "5000mAh",
+                installments: false
+            },
+            {
+                id: 21,
+                name: "Microsoft Surface Pro 9",
+                category: "tablets",
+                brand: "Microsoft",
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=400&fit=crop",
+                price: 1099,
+                originalPrice: 1299,
+                specs: "Intel i7-1255U • 16GB RAM + 512GB SSD • 13\" PixelSense • Windows 11",
+                rating: 4.5,
+                reviews: 567,
+                badges: ["warranty"],
+                availability: "in-stock",
+                ram: "16GB",
+                storage: "512GB",
+                cpu: "Intel i7",
+                display: "13\"",
+                installments: true
+            },
+            {
+                id: 22,
+                name: "Fitbit Versa 4",
+                category: "watches",
+                brand: "Fitbit",
+                image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=400&fit=crop",
+                price: 199,
+                originalPrice: 249,
+                specs: "Built-in GPS • 6+ Day Battery • Health Metrics • Alexa Built-in",
+                rating: 4.3,
+                reviews: 2134,
+                badges: ["deal"],
+                availability: "in-stock",
+                battery: "6+ days",
+                connectivity: "GPS",
+                installments: false
+            },
+            {
+                id: 23,
+                name: "JBL Tune 760NC",
+                category: "earbuds",
+                brand: "JBL",
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
+                price: 99,
+                originalPrice: 129,
+                specs: "Active Noise Cancelling • 35hr Battery • JBL Pure Bass • Wireless",
+                rating: 4.4,
+                reviews: 1876,
+                badges: ["deal"],
+                availability: "in-stock",
+                bluetooth: "5.0",
+                battery: "35hr",
+                installments: false
+            },
+            {
+                id: 24,
+                name: "Xiaomi 67W GaN Charger",
+                category: "chargers",
+                brand: "Xiaomi",
+                image: "https://images.unsplash.com/photo-1609592806787-3d9c1b8e5e8e?w=400&h=400&fit=crop",
+                price: 35,
+                originalPrice: 49,
+                specs: "67W Fast Charging • GaN Technology • USB-C + USB-A • Compact Design",
+                rating: 4.5,
+                reviews: 2345,
+                badges: ["hot"],
+                availability: "in-stock",
+                power: "67W",
+                ports: "USB-C + USB-A",
+                installments: false
+            },
+            {
+                id: 25,
+                name: "Baseus 20000mAh Power Bank",
+                category: "powerbanks",
+                brand: "Baseus",
+                image: "https://images.unsplash.com/photo-1609592806787-3d9c1b8e5e8e?w=400&h=400&fit=crop",
+                price: 49,
+                originalPrice: 69,
+                specs: "20000mAh • 22.5W Fast Charging • Digital Display • Multiple Ports",
+                rating: 4.4,
+                reviews: 1567,
+                badges: ["deal"],
+                availability: "in-stock",
+                capacity: "20000mAh",
+                power: "22.5W",
+                installments: false
+            },
+            {
+                id: 26,
+                name: "Tecno Phantom V Fold",
+                category: "mobiles",
+                brand: "Tecno",
+                image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=400&fit=crop",
+                price: 1099,
+                originalPrice: 1299,
+                specs: "Dimensity 9000+ • 12GB RAM + 256GB • 50MP Triple Camera • 5000mAh",
+                rating: 4.1,
+                reviews: 234,
+                badges: ["hot"],
+                availability: "pre-order",
+                ram: "12GB",
+                storage: "256GB",
+                camera: "50MP",
+                battery: "5000mAh",
+                installments: true
+            },
+            {
+                id: 27,
+                name: "Acer Predator Helios 300",
+                category: "laptops",
+                brand: "Acer",
+                image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=400&fit=crop",
+                price: 1199,
+                originalPrice: 1399,
+                specs: "Intel i7-12700H • 16GB RAM + 512GB SSD • RTX 4060 • 15.6\" FHD 144Hz",
+                rating: 4.4,
+                reviews: 678,
+                badges: ["deal", "warranty"],
+                availability: "in-stock",
+                ram: "16GB",
+                storage: "512GB",
+                cpu: "Intel i7",
+                gpu: "RTX 4060",
+                display: "15.6\"",
+                installments: true
+            },
+            {
+                id: 28,
+                name: "Honor Pad 8",
+                category: "tablets",
+                brand: "Honor",
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=400&fit=crop",
+                price: 299,
+                originalPrice: 349,
+                specs: "Snapdragon 680 • 6GB RAM + 128GB • 12\" 2K Display • 7250mAh",
+                rating: 4.2,
+                reviews: 456,
+                badges: ["deal"],
+                availability: "in-stock",
+                ram: "6GB",
+                storage: "128GB",
+                display: "12\"",
+                battery: "7250mAh",
+                installments: false
+            },
+            {
+                id: 29,
+                name: "Amazfit GTR 4",
+                category: "watches",
+                brand: "Amazfit",
+                image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop",
+                price: 199,
+                originalPrice: 249,
+                specs: "GPS • 14-day Battery • 150+ Sports Modes • AMOLED Display",
+                rating: 4.3,
+                reviews: 1123,
+                badges: ["deal"],
+                availability: "in-stock",
+                display: "AMOLED",
+                battery: "14-day",
+                installments: false
+            },
+            {
+                id: 30,
+                name: "Nothing Ear (2)",
+                category: "earbuds",
+                brand: "Nothing",
+                image: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=400&fit=crop",
+                price: 149,
+                originalPrice: 179,
+                specs: "Hi-Res Audio • ANC • Transparent Design • 36hr Battery",
+                rating: 4.5,
+                reviews: 987,
+                badges: ["hot"],
+                availability: "in-stock",
+                bluetooth: "5.3",
+                battery: "36hr",
+                installments: false
+            },
+            {
+                id: 31,
+                name: "Belkin 3-in-1 Wireless Charger",
+                category: "chargers",
+                brand: "Belkin",
+                image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop",
+                price: 129,
+                originalPrice: 149,
+                specs: "15W Wireless • iPhone + AirPods + Apple Watch • MagSafe Compatible",
+                rating: 4.6,
+                reviews: 1234,
+                badges: ["warranty"],
+                availability: "in-stock",
+                power: "15W",
+                compatibility: "MagSafe",
+                installments: false
+            },
+            {
+                id: 32,
+                name: "RAVPower 30000mAh Power Bank",
+                category: "powerbanks",
+                brand: "RAVPower",
+                image: "https://images.unsplash.com/photo-1609592806787-3d9c1b8e5e8e?w=400&h=400&fit=crop",
+                price: 79,
+                originalPrice: 99,
+                specs: "30000mAh • 90W PD • 3 Ports • LED Display • Fast Charging",
+                rating: 4.5,
+                reviews: 2345,
+                badges: ["deal"],
+                availability: "in-stock",
+                capacity: "30000mAh",
+                power: "90W",
+                installments: false
+            },
+            {
+                id: 33,
+                name: "Itel A70",
+                category: "mobiles",
+                brand: "Itel",
+                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=400&fit=crop",
+                price: 129,
+                originalPrice: 159,
+                specs: "Unisoc Tiger T606 • 4GB RAM + 128GB • 48MP Dual Camera • 5000mAh",
+                rating: 3.9,
+                reviews: 567,
+                badges: ["deal"],
+                availability: "in-stock",
+                ram: "4GB",
+                storage: "128GB",
+                camera: "48MP",
+                battery: "5000mAh",
+                installments: false
+            },
+            {
+                id: 34,
+                name: "MSI Creator Z16P",
+                category: "laptops",
+                brand: "MSI",
+                image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop",
+                price: 2199,
+                originalPrice: 2499,
+                specs: "Intel i9-12900H • 32GB RAM + 1TB SSD • RTX 4080 • 16\" QHD+ 165Hz",
+                rating: 4.7,
+                reviews: 345,
+                badges: ["warranty"],
+                availability: "in-stock",
+                ram: "32GB",
+                storage: "1TB",
+                cpu: "Intel i9",
+                gpu: "RTX 4080",
+                display: "16\"",
+                installments: true
+            },
+            {
+                id: 35,
+                name: "Huawei MatePad Pro 11",
+                category: "tablets",
+                brand: "Huawei",
+                image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=400&fit=crop",
+                price: 599,
+                originalPrice: 699,
+                specs: "Snapdragon 888 • 8GB RAM + 256GB • 11\" OLED • M-Pencil Support",
+                rating: 4.4,
+                reviews: 432,
+                badges: ["deal"],
+                availability: "in-stock",
+                ram: "8GB",
+                storage: "256GB",
+                display: "11\"",
+                installments: true
+            },
+            {
+                id: 36,
+                name: "Fossil Gen 6",
+                category: "watches",
+                brand: "Fossil",
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
+                price: 255,
+                originalPrice: 299,
+                specs: "Wear OS • Snapdragon 4100+ • GPS • Heart Rate • 1.28\" AMOLED",
+                rating: 4.2,
+                reviews: 876,
+                badges: ["deal"],
+                availability: "in-stock",
+                display: "1.28\"",
+                os: "Wear OS",
+                installments: false
+            },
+            {
+                id: 37,
+                name: "Sennheiser Momentum 4",
+                category: "earbuds",
+                brand: "Sennheiser",
+                image: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=400&fit=crop",
+                price: 349,
+                originalPrice: 399,
+                specs: "Adaptive ANC • 60hr Battery • Audiophile Sound • Premium Build",
+                rating: 4.8,
+                reviews: 1567,
+                badges: ["warranty"],
+                availability: "in-stock",
+                bluetooth: "5.2",
+                battery: "60hr",
+                installments: true
+            },
+            {
+                id: 38,
+                name: "UGREEN 100W GaN Charger",
+                category: "chargers",
+                brand: "UGREEN",
+                image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop",
+                price: 69,
+                originalPrice: 89,
+                specs: "100W Power Delivery • 4 Ports • GaN Technology • Universal Compatibility",
+                rating: 4.6,
+                reviews: 1890,
+                badges: ["hot"],
+                availability: "in-stock",
+                power: "100W",
+                ports: "4 Ports",
+                installments: false
+            },
+            {
+                id: 39,
+                name: "Aukey 25000mAh Power Bank",
+                category: "powerbanks",
+                brand: "Aukey",
+                image: "https://images.unsplash.com/photo-1609592806787-3d9c1b8e5e8e?w=400&h=400&fit=crop",
+                price: 59,
+                originalPrice: 79,
+                specs: "25000mAh • 100W PD • Wireless Charging • Digital Display",
+                rating: 4.4,
+                reviews: 1234,
+                badges: ["deal"],
+                availability: "in-stock",
+                capacity: "25000mAh",
+                power: "100W",
+                installments: false
+            },
+            {
+                id: 40,
+                name: "OnePlus 12",
+                category: "mobiles",
+                brand: "OnePlus",
+                image: "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=400&h=400&fit=crop",
+                price: 799,
+                originalPrice: 899,
+                specs: "Snapdragon 8 Gen 3 • 16GB RAM + 512GB • 50MP Hasselblad Camera • 5400mAh",
+                rating: 4.6,
+                reviews: 1456,
+                badges: ["hot", "warranty"],
+                availability: "in-stock",
+                ram: "16GB",
+                storage: "512GB",
+                camera: "50MP",
+                battery: "5400mAh",
+                installments: true
+            },
+            {
+                id: 41,
+                name: "Framework Laptop 13",
+                category: "laptops",
+                brand: "Framework",
+                image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&h=400&fit=crop",
+                price: 1049,
+                originalPrice: 1199,
+                specs: "Intel i5-1340P • 16GB RAM + 512GB SSD • 13.5\" 3:2 Display • Modular Design",
+                rating: 4.5,
+                reviews: 234,
+                badges: ["warranty"],
+                availability: "in-stock",
+                ram: "16GB",
+                storage: "512GB",
+                cpu: "Intel i5",
+                display: "13.5\"",
+                installments: true
+            },
+            {
+                id: 42,
+                name: "Lenovo Tab P11 Plus",
+                category: "tablets",
+                brand: "Lenovo",
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=400&fit=crop",
+                price: 249,
+                originalPrice: 299,
+                specs: "MediaTek Helio G90T • 6GB RAM + 128GB • 11\" 2K Display • 7700mAh",
+                rating: 4.1,
+                reviews: 567,
+                badges: ["deal"],
+                availability: "in-stock",
+                ram: "6GB",
+                storage: "128GB",
+                display: "11\"",
+                battery: "7700mAh",
+                installments: false
+            },
+            {
+                id: 43,
+                name: "TicWatch Pro 5",
+                category: "watches",
+                brand: "TicWatch",
+                image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop",
+                price: 349,
+                originalPrice: 399,
+                specs: "Wear OS • Snapdragon W5+ • Dual Display • 80hr Battery • GPS",
+                rating: 4.3,
+                reviews: 678,
+                badges: ["deal"],
+                availability: "in-stock",
+                display: "Dual Display",
+                battery: "80hr",
+                installments: true
+            },
+            {
+                id: 44,
+                name: "Audio-Technica ATH-M50xBT2",
+                category: "earbuds",
+                brand: "Audio-Technica",
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
+                price: 199,
+                originalPrice: 229,
+                specs: "Professional Monitor • 50hr Battery • Low Latency • Studio Quality",
+                rating: 4.7,
+                reviews: 2134,
+                badges: ["warranty"],
+                availability: "in-stock",
+                bluetooth: "5.0",
+                battery: "50hr",
+                installments: false
+            },
+            {
+                id: 45,
+                name: "Spigen 65W GaN Charger",
+                category: "chargers",
+                brand: "Spigen",
+                image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=400&fit=crop",
+                price: 39,
+                originalPrice: 49,
+                specs: "65W Power Delivery • Dual Port • GaN Technology • Compact Design",
+                rating: 4.5,
+                reviews: 1567,
+                badges: ["deal"],
+                availability: "in-stock",
+                power: "65W",
+                ports: "Dual Port",
+                installments: false
+            },
+            {
+                id: 46,
+                name: "Zendure SuperTank Pro",
+                category: "powerbanks",
+                brand: "Zendure",
+                image: "https://images.unsplash.com/photo-1609592806787-3d9c1b8e5e8e?w=400&h=400&fit=crop",
+                price: 199,
+                originalPrice: 249,
+                specs: "26800mAh • 100W PD • 4 Ports • Premium Build • Pass-through Charging",
+                rating: 4.7,
+                reviews: 890,
+                badges: ["warranty"],
+                availability: "in-stock",
+                capacity: "26800mAh",
+                power: "100W",
+                installments: false
+            },
+            {
+                id: 47,
+                name: "Google Pixel 8 Pro",
+                category: "mobiles",
+                brand: "Google",
+                image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=400&fit=crop",
+                price: 999,
+                originalPrice: 1099,
+                specs: "Google Tensor G3 • 12GB RAM + 256GB • 50MP Pro Camera • 5050mAh",
+                rating: 4.7,
+                reviews: 1789,
+                badges: ["hot", "warranty"],
+                availability: "in-stock",
+                ram: "12GB",
+                storage: "256GB",
+                camera: "50MP",
+                battery: "5050mAh",
+                installments: true
+            },
+            {
+                id: 48,
+                name: "Alienware x17 R2",
+                category: "laptops",
+                brand: "Alienware",
+                image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=400&fit=crop",
+                price: 2799,
+                originalPrice: 3199,
+                specs: "Intel i9-12900HK • 32GB RAM + 1TB SSD • RTX 4090 • 17.3\" UHD 120Hz",
+                rating: 4.8,
+                reviews: 456,
+                badges: ["warranty"],
+                availability: "in-stock",
+                ram: "32GB",
+                storage: "1TB",
+                cpu: "Intel i9",
+                gpu: "RTX 4090",
+                display: "17.3\"",
+                installments: true
+            },
+            {
+                id: 49,
+                name: "Amazon Fire HD 10",
+                category: "tablets",
+                brand: "Amazon",
+                image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=400&fit=crop",
+                price: 149,
+                originalPrice: 179,
+                specs: "Octa-core 2.0GHz • 3GB RAM + 32GB • 10.1\" Full HD • 12hr Battery",
+                rating: 4.0,
+                reviews: 3456,
+                badges: ["deal"],
+                availability: "in-stock",
+                ram: "3GB",
+                storage: "32GB",
+                display: "10.1\"",
+                battery: "12hr",
+                installments: false
+            },
+            {
+                id: 50,
+                name: "Polar Vantage V3",
+                category: "watches",
+                brand: "Polar",
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop",
+                price: 599,
+                originalPrice: 699,
+                specs: "GPS • Training Load Pro • 61hr Battery • AMOLED Display • Premium Materials",
+                rating: 4.6,
+                reviews: 567,
+                badges: ["warranty"],
+                availability: "in-stock",
+                display: "AMOLED",
+                battery: "61hr",
+                installments: true
+            }
+        ];
+
+        // Global state
+        let filteredProducts = [...products];
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
+        let currentSort = 'relevance';
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            setupEventListeners();
+            populateBrandFilters();
+            setTimeout(() => {
+                renderProducts();
+                updateCartCount();
+                updateCompareUI();
+            }, 1500); // Simulate loading time
+        }
+
+        function setupEventListeners() {
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            
+            searchInput.addEventListener('input', handleSearch);
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') performSearch();
+            });
+
+            // Navigation hover effects
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                const megaMenu = item.querySelector('.mega-menu');
+                if (megaMenu) {
+                    item.addEventListener('mouseenter', () => {
+                        megaMenu.style.display = 'block';
+                    });
+                    item.addEventListener('mouseleave', () => {
+                        megaMenu.style.display = 'none';
+                    });
+                }
+            });
+
+            // Price filter
+            const minPrice = document.getElementById('minPrice');
+            const maxPrice = document.getElementById('maxPrice');
+            minPrice.addEventListener('change', applyFilters);
+            maxPrice.addEventListener('change', applyFilters);
+
+            // Modal close on outside click
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        function populateBrandFilters() {
+            const brands = [...new Set(products.map(p => p.brand))].sort();
+            const brandFilters = document.getElementById('brandFilters');
+            
+            brandFilters.innerHTML = brands.map(brand => `
+                <label class="filter-option">
+                    <input type="checkbox" value="${brand}" onchange="applyFilters()"> ${brand}
+                </label>
+            `).join('');
+        }
+
+        function handleSearch(e) {
+            const query = e.target.value.toLowerCase();
+            if (query.length > 2) {
+                showSearchSuggestions(query);
+            } else {
+                hideSearchSuggestions();
+            }
+        }
+
+        function showSearchSuggestions(query) {
+            const suggestions = products
+                .filter(p => p.name.toLowerCase().includes(query) || p.brand.toLowerCase().includes(query))
+                .slice(0, 5);
+            
+            const suggestionsContainer = document.getElementById('searchSuggestions');
+            
+            if (suggestions.length > 0) {
+                suggestionsContainer.innerHTML = suggestions.map(p => `
+                    <div class="suggestion-item" onclick="selectSuggestion('${p.name}')">
+                        ${p.name}
+                    </div>
+                `).join('');
+                suggestionsContainer.style.display = 'block';
+            } else {
+                hideSearchSuggestions();
+            }
+        }
+
+        function hideSearchSuggestions() {
+            document.getElementById('searchSuggestions').style.display = 'none';
+        }
+
+        function selectSuggestion(productName) {
+            document.getElementById('searchInput').value = productName;
+            hideSearchSuggestions();
+            performSearch();
+        }
+
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categorySelect').value;
+            
+            filteredProducts = products.filter(product => {
+                const matchesQuery = !query || 
+                    product.name.toLowerCase().includes(query) ||
+                    product.brand.toLowerCase().includes(query) ||
+                    product.specs.toLowerCase().includes(query);
+                
+                const matchesCategory = !category || product.category === category;
+                
+                return matchesQuery && matchesCategory;
+            });
+            
+            applyFilters();
+            hideSearchSuggestions();
+            scrollToProducts();
+        }
+
+        function applyFilters() {
+            const checkedBrands = Array.from(document.querySelectorAll('#brandFilters input:checked')).map(cb => cb.value);
+            const checkedRAM = Array.from(document.querySelectorAll('.filter-section:nth-child(3) input:checked')).map(cb => cb.value);
+            const checkedStorage = Array.from(document.querySelectorAll('.filter-section:nth-child(4) input:checked')).map(cb => cb.value);
+            const checkedAvailability = Array.from(document.querySelectorAll('.filter-section:nth-child(5) input:checked')).map(cb => cb.value);
+            
+            const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+            const maxPrice = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+            
+            filteredProducts = products.filter(product => {
+                const matchesBrand = checkedBrands.length === 0 || checkedBrands.includes(product.brand);
+                const matchesRAM = checkedRAM.length === 0 || checkedRAM.includes(product.ram);
+                const matchesStorage = checkedStorage.length === 0 || checkedStorage.includes(product.storage);
+                const matchesAvailability = checkedAvailability.length === 0 || checkedAvailability.includes(product.availability);
+                const matchesPrice = product.price >= minPrice && product.price <= maxPrice;
+                
+                return matchesBrand && matchesRAM && matchesStorage && matchesAvailability && matchesPrice;
+            });
+            
+            renderProducts();
+        }
+
+        function applyPriceFilter() {
+            applyFilters();
+        }
+
+        function sortProducts() {
+            const sortValue = document.getElementById('sortSelect').value;
+            currentSort = sortValue;
+            
+            switch (sortValue) {
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => b.id - a.id);
+                    break;
+                case 'popular':
+                    filteredProducts.sort((a, b) => b.reviews - a.reviews);
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+                default:
+                    filteredProducts = [...products];
+            }
+            
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const count = document.getElementById('productsCount');
+            
+            count.textContent = `${filteredProducts.length} products found`;
+            
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #666;">No products found matching your criteria.</div>';
+                return;
+            }
+            
+            grid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
+        }
+
+        function createProductCard(product) {
+            const hasDiscount = product.originalPrice > product.price;
+            const discountPercent = hasDiscount ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+            
+            return `
+                <div class="product-card" onclick="openProductModal(${product.id})">
+                    <div class="product-badges">
+                        ${product.badges.map(badge => `
+                            <span class="badge-small badge-${badge}">
+                                ${badge === 'hot' ? '🔥 Hot' : badge === 'deal' ? '💰 Deal' : '✓ Warranty'}
+                            </span>
+                        `).join('')}
+                    </div>
+                    
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    
+                    <div class="product-title">${product.name}</div>
+                    <div class="product-specs">${product.specs}</div>
+                    
+                    ${hasDiscount ? '<span class="lowest-price-badge">Lowest Price</span>' : ''}
+                    
+                    <div class="product-price">
+                        <span class="current-price">$${product.price}</span>
+                        ${hasDiscount ? `
+                            <span class="original-price">$${product.originalPrice}</span>
+                            <span class="price-drop">↓${discountPercent}%</span>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="product-rating">
+                        <span class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}</span>
+                        <span class="rating-count">(${product.reviews})</span>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <button class="btn-primary" onclick="event.stopPropagation(); buyNow(${product.id})">Buy Now</button>
+                        <button class="btn-secondary" onclick="event.stopPropagation(); addToCart(${product.id})">Add to Cart</button>
+                    </div>
+                    
+                    <div class="product-menu">
+                        <button class="menu-btn" onclick="event.stopPropagation(); toggleProductMenu(${product.id})">⋯</button>
+                        <div class="dropdown-menu" id="menu-${product.id}">
+                            <div class="dropdown-item" onclick="event.stopPropagation(); addToCompare(${product.id})">Compare</div>
+                            <div class="dropdown-item" onclick="event.stopPropagation(); addToWishlist(${product.id})">Add to Wishlist</div>
+                            <div class="dropdown-item" onclick="event.stopPropagation(); shareProduct(${product.id})">Share</div>
+                            <div class="dropdown-item" onclick="event.stopPropagation(); openProductModal(${product.id})">View Details</div>
+                        </div>
+                    </div>
+                    
+                    ${product.installments ? '<div style="font-size: 0.8rem; color: #28a745; margin-top: 0.5rem;">💳 Installments Available</div>' : ''}
+                </div>
+            `;
+        }
+
+        function toggleProductMenu(productId) {
+            const menu = document.getElementById(`menu-${productId}`);
+            const isVisible = menu.style.display === 'block';
+            
+            // Hide all menus
+            document.querySelectorAll('.dropdown-menu').forEach(m => m.style.display = 'none');
+            
+            // Show this menu if it wasn't visible
+            if (!isVisible) {
+                menu.style.display = 'block';
+            }
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showToast(`${product.name} added to cart!`);
+        }
+
+        function buyNow(productId) {
+            addToCart(productId);
+            showToast('Redirecting to checkout...', 'info');
+            // In a real app, this would redirect to checkout
+        }
+
+        function addToWishlist(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            if (!wishlist.find(item => item.id === productId)) {
+                wishlist.push(product);
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                showToast(`${product.name} added to wishlist!`);
+            } else {
+                showToast('Product already in wishlist!', 'warning');
+            }
+        }
+
+        function addToCompare(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            if (compareList.length >= 3) {
+                showToast('You can compare maximum 3 products!', 'warning');
+                return;
+            }
+            
+            if (!compareList.find(item => item.id === productId)) {
+                compareList.push(product);
+                localStorage.setItem('compareList', JSON.stringify(compareList));
+                updateCompareUI();
+                showToast(`${product.name} added to compare!`);
+            } else {
+                showToast('Product already in compare list!', 'warning');
+            }
+        }
+
+        function shareProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: product.name,
+                    text: `Check out this amazing ${product.name} for just $${product.price}!`,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const url = `${window.location.href}?product=${productId}`;
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast('Product link copied to clipboard!');
+                });
+            }
+        }
+
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        function updateCompareUI() {
+            const tray = document.getElementById('compareTray');
+            const items = document.getElementById('compareItems');
+            
+            if (compareList.length > 0) {
+                tray.classList.add('active');
+                items.innerHTML = compareList.map(product => `
+                    <div class="compare-item">
+                        <img src="${product.image}" alt="${product.name}">
+                        <span>${product.name}</span>
+                        <button class="remove-compare" onclick="removeFromCompare(${product.id})">×</button>
+                    </div>
+                `).join('');
+            } else {
+                tray.classList.remove('active');
+            }
+        }
+
+        function removeFromCompare(productId) {
+            compareList = compareList.filter(item => item.id !== productId);
+            localStorage.setItem('compareList', JSON.stringify(compareList));
+            updateCompareUI();
+        }
+
+        function clearCompare() {
+            compareList = [];
+            localStorage.setItem('compareList', JSON.stringify(compareList));
+            updateCompareUI();
+            showToast('Compare list cleared!');
+        }
+
+        function openCompareModal() {
+            if (compareList.length < 2) {
+                showToast('Add at least 2 products to compare!', 'warning');
+                return;
+            }
+            
+            const modal = document.getElementById('compareModal');
+            const body = document.getElementById('compareModalBody');
+            
+            // Create comparison table
+            const specs = ['price', 'rating', 'brand', 'ram', 'storage', 'camera', 'battery'];
+            
+            body.innerHTML = `
+                <div style="overflow-x: auto;">
+                    <table class="specs-table" style="min-width: 600px;">
+                        <thead>
+                            <tr>
+                                <th>Specification</th>
+                                ${compareList.map(product => `<th>${product.name}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${specs.map(spec => `
+                                <tr>
+                                    <td style="font-weight: 600; text-transform: capitalize;">${spec}</td>
+                                    ${compareList.map(product => `
+                                        <td>
+                                            ${spec === 'price' ? `$${product.price}` : 
+                                              spec === 'rating' ? `${product.rating} ★` :
+                                              product[spec] || 'N/A'}
+                                        </td>
+                                    `).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeCompareModal() {
+            document.getElementById('compareModal').style.display = 'none';
+        }
+
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            const modal = document.getElementById('productModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            
+            title.textContent = product.name;
+            
+            const hasDiscount = product.originalPrice > product.price;
+            const discountPercent = hasDiscount ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+            
+            body.innerHTML = `
+                <div class="product-detail">
+                    <div class="product-gallery">
+                        <img src="${product.image}" alt="${product.name}" class="main-image" id="mainImage">
+                        <div class="thumbnail-list">
+                            <img src="${product.image}" alt="View 1" class="thumbnail active" onclick="changeMainImage('${product.image}')">
+                            <img src="${product.image}" alt="View 2" class="thumbnail" onclick="changeMainImage('${product.image}')">
+                            <img src="${product.image}" alt="View 3" class="thumbnail" onclick="changeMainImage('${product.image}')">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h2>${product.name}</h2>
+                        
+                        <div class="product-price" style="margin: 1rem 0;">
+                            <span class="current-price" style="font-size: 1.5rem;">$${product.price}</span>
+                            ${hasDiscount ? `
+                                <span class="original-price" style="font-size: 1.2rem;">$${product.originalPrice}</span>
+                                <span class="price-drop">↓${discountPercent}%</span>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="product-rating" style="margin-bottom: 1rem;">
+                            <span class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}</span>
+                            <span class="rating-count">(${product.reviews} reviews)</span>
+                        </div>
+                        
+                        <div class="product-actions" style="margin-bottom: 2rem;">
+                            <button class="btn-primary" onclick="buyNow(${product.id})">Buy Now</button>
+                            <button class="btn-secondary" onclick="addToCart(${product.id})">Add to Cart</button>
+                        </div>
+                        
+                        ${product.installments ? '<div style="color: #28a745; margin-bottom: 1rem;">💳 Installments Available</div>' : ''}
+                        
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <h4>Delivery & Returns</h4>
+                            <p>🚚 Free delivery nationwide</p>
+                            <p>📦 Open-parcel policy available</p>
+                            <p>🔄 7-day return policy</p>
+                            <p>✅ Official warranty included</p>
+                        </div>
+                        
+                        <table class="specs-table">
+                            <thead>
+                                <tr><th colspan="2">Specifications</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Brand</td><td>${product.brand}</td></tr>
+                                <tr><td>Category</td><td>${product.category}</td></tr>
+                                ${product.ram ? `<tr><td>RAM</td><td>${product.ram}</td></tr>` : ''}
+                                ${product.storage ? `<tr><td>Storage</td><td>${product.storage}</td></tr>` : ''}
+                                ${product.camera ? `<tr><td>Camera</td><td>${product.camera}</td></tr>` : ''}
+                                ${product.battery ? `<tr><td>Battery</td><td>${product.battery}</td></tr>` : ''}
+                                ${product.cpu ? `<tr><td>Processor</td><td>${product.cpu}</td></tr>` : ''}
+                                ${product.gpu ? `<tr><td>Graphics</td><td>${product.gpu}</td></tr>` : ''}
+                                ${product.display ? `<tr><td>Display</td><td>${product.display}</td></tr>` : ''}
+                                <tr><td>Availability</td><td>${product.availability === 'in-stock' ? 'In Stock' : 'Pre-Order'}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <h3>Customer Reviews</h3>
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="font-size: 2rem; font-weight: bold;">${product.rating}</div>
+                            <div>
+                                <div class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}</div>
+                                <div style="color: #666;">${product.reviews} reviews</div>
+                            </div>
+                        </div>
+                        <p style="color: #666; font-style: italic;">Reviews and Q&A section would be populated with real customer feedback in a live system.</p>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        function changeMainImage(src) {
+            document.getElementById('mainImage').src = src;
+            document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function scrollToProducts() {
+            document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.product-menu')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.style.display = 'none';
+                });
+            }
+        });
+
+        // Newsletter subscription
+        document.querySelector('.newsletter button').addEventListener('click', function() {
+            const email = document.querySelector('.newsletter input').value;
+            if (email) {
+                showToast('Thank you for subscribing to our newsletter!');
+                document.querySelector('.newsletter input').value = '';
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97474820d0b821f5',t:'MTc1NjA4NDk4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
